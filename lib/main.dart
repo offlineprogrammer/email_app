@@ -22,6 +22,13 @@ class EmailApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   final String title;
+  var messages = const [
+    'My first message',
+    'My second message',
+    'You won lottery',
+    'You should read this message',
+    'You did it'
+  ];
   MyHomePage({this.title});
 
   @override
@@ -30,25 +37,23 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+      body: ListView.separated(
+        itemCount: messages.length,
+        itemBuilder: (BuildContext context, int index) {
+          var title = messages[index];
+          return ListTile(
+            title: Text(title),
+            isThreeLine: true,
+            leading: CircleAvatar(
+              child: Text('PJ'),
             ),
-            Text(
-              'Test',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+            subtitle: Text('Another Text'),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return Divider();
+        },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
