@@ -18,10 +18,16 @@ class MessageList extends StatefulWidget {
 }
 
 class _MessageListState extends State<MessageList> {
-  Future<List<Message>> messages;
+  Future<List<Message>> future;
+  List<Message> _messages;
+
+  void fetch() async {
+    future = Message.browse();
+    _messages = await future;
+  }
 
   void initState() {
-    messages = Message.browse();
+    fetch();
     super.initState();
   }
 
@@ -33,17 +39,17 @@ class _MessageListState extends State<MessageList> {
         actions: [
           IconButton(
             icon: Icon(Icons.refresh),
-            onPressed: () {
-              var _messages = Message.browse();
+            onPressed: () async {
+              var _messages = await Message.browse();
               setState(() {
-                messages = _messages;
+                _messages = _messages;
               });
             },
           )
         ],
       ),
       body: FutureBuilder(
-        future: messages,
+        future: future,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -85,7 +91,7 @@ class _MessageListState extends State<MessageList> {
           }
         },
       ),
-      floatingActionButton: ComposeButton(),
+      floatingActionButton: ComposeButton(_messages),
     );
   }
 }
