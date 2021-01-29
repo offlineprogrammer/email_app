@@ -1,19 +1,19 @@
 import 'package:email_app/contact_manager.dart';
 import 'package:email_app/models/contact.dart';
+import 'package:email_app/provider.dart';
 import 'package:flutter/material.dart';
 
 class ContactLessBuilder extends StatelessWidget {
   const ContactLessBuilder({
     Key key,
-    @required this.manager,
     @required this.query,
   }) : super(key: key);
 
-  final ContactManager manager;
   final String query;
 
   @override
   Widget build(BuildContext context) {
+    ContactManager manager = Provider.of(context);
     return StreamBuilder(
         stream: manager.filteredCollection(query: query),
         builder: (context, snapshot) {

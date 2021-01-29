@@ -1,13 +1,10 @@
 import 'package:email_app/contact_less_builder.dart';
 import 'package:email_app/contact_manager.dart';
 import 'package:email_app/models/contact.dart';
+import 'package:email_app/provider.dart';
 import 'package:flutter/material.dart';
 
 class ContactSearchDelegate extends SearchDelegate {
-  final ContactManager manager;
-
-  ContactSearchDelegate(this.manager);
-
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -38,7 +35,7 @@ class ContactSearchDelegate extends SearchDelegate {
         child: Text('We need more'),
       );
     }
-    return ContactLessBuilder(manager: manager, query: query);
+    return ContactLessBuilder(query: query);
   }
 
   @override
